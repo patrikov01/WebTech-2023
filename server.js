@@ -2,11 +2,18 @@ const express = require('express');
 const multer = require('multer');
 const fs = require('fs');
 const path = require('path'); 
+const cors = require('cors');
+
 const app = express();
 const upload = multer({ dest: 'uploads/' });
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static("build"));
+
+app.use(cors({
+  origin: 'http://localhost:3000',
+}));
 
 app.post('/api/upload', upload.single('file'), async (req, res) => {
 
@@ -152,7 +159,7 @@ app.put('/api/rename', async (req, res) => {
 });
 
 
-const port = 3000; 
+const port = 3001; 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
